@@ -8,12 +8,12 @@ const answerEl = document.querySelector('.answers')
 const seeScore = document.querySelector('.finish')
 const questionContainerEl = document.querySelector('.questionContainer')
 const initialsInputEl = document.querySelector('.initialsInput')
-const submittedInital = document.getElementById('initial').value;
+let submittedInital = document.getElementById('initial').value;
 const submitbtn = document.querySelector('.submit')
 const myForm = document.getElementById('myForm')
 const seeScoreboard = document.querySelector('.scoreboard')
-const showInitial = document.querySelector('yourInitial')
-const showScore = document.querySelector('yourScore')
+let showInitial = document.querySelector('.yourInitial')
+let showScore = document.querySelector('.yourScore')
 
 let shuffledQuestions, currentQuestionIndex
 // function to start timer and and question, when click the start button 
@@ -274,11 +274,13 @@ myForm.addEventListener("submit", finalScore)
 
 function finalScore(e) {
     e.preventDefault();
+    submittedInital = document.getElementById('initial').value;
     localStorage.setItem("ID", submittedInital)
     let myName = localStorage.getItem("ID");
     console.log(submittedInital);
     showInitial.innerHTML = myName;
     showScore.textContent = myScore;
+    seeScoreboard.classList.remove('hide')
 }
 
 
