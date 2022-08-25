@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js" defer></script>
+    <title>Code Quiz</title>
+</head>
+<div id="scoreboard">View Highscores</div>
+<div id="timer">50</div>
+
+<div><button id="start">Start!</button></div>
+
+<div class="quizcontainer hide">
+    <div class="questionContainer">
+        <div class="Question">Q. test</div>
+        <div class="answers">
+            <button class="answer">A1</button>
+            <button class="answer">A2</button>
+            <button class="answer">A3</button>
+            <button class="answer">A4</button>
+        </div>
+    </div>
+    <div class="okayNext">
+        <button class="next">Next</button>
+        <button class="finish">Game over! <br> Click and See your Score</button>
+    </div>
+    <div class="initialsInput">
+        <form id="myForm" class="form">
+            <label for="Initials">Your Initials: </label>
+            <input type="text" placeholder="OO" maxlength="3" id="initial">
+            <!-- <input type="submit" id="submit"> -->
+            <button type="submit" class="submit">Submit</button>
+        </form>
+        <div class="scoreboard">
+            Your score
+            <p class="yourInitial">QQ</p>
+            <p class="yourScore">100</p>
+        </div>
+    </div>
+</div>
+
+<body>
+
+</body>
+
+</html>
