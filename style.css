@@ -58,7 +58,13 @@ body {
     align-items: flex-start;
 }
 
-
+#scoreboard {
+    font-size: 1.5em;
+    padding:0.2em;
+    margin: 0.5em;
+    border-radius: 0.5em;
+    color:#4169E1
+}
 
 button:hover {
     border-color: aqua;

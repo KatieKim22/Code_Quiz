@@ -1,4 +1,5 @@
 // variables
+const viewScore = document.getElementById('scoreboard')
 const startButton = document.querySelector('#start')
 const nextButton = document.querySelector('.next')
 const quizTimer = document.querySelector('#timer')
@@ -50,9 +51,13 @@ function startQuiz() {
     seeScore.classList.add('hide')
     initialsInputEl.classList.add('hide')
     // sort questions by random order
+
     shuffledQuestions = qandas.sort(() => Math.random() - 0.5)
+
     currentQuestionIndex = 0;
     setNextQuestion();
+
+    console.log(shuffledQuestions)
 }
 
 
@@ -167,7 +172,7 @@ const qandas = [
 function setNextQuestion() {
     resetQuestion()
     showQuestion(shuffledQuestions[currentQuestionIndex])
-    console.log(shuffledQuestions)
+
 }
 
 
@@ -201,22 +206,23 @@ function resetQuestion() {
 //check the answers and calculate scores
 answerEl.addEventListener("click", selectAnswer)
 
-let myScore = 0;
-
 function selectAnswer(e) {
 
+    var cnt;
     let selectedAnswer = e.target;
     let correct = selectedAnswer.dataset.correct;
+    console.log("selectedAnswer = " + selectedAnswer + "\n");
+    console.log("correct = " + correct + "\n");
 
 
-    Array.from(answerEl.children).forEach(answerEl => {
-        if (correct) {
-            scoreCalculation()
-        }
-    })
+
     setStatus(document.body, correct)
+    cnt = 0;
     Array.from(answerEl.children).forEach(button => {
         setStatus(button, button.dataset.correct)
+        console.log("foreach cnt = "+cnt+"\n")
+        cnt++;
+
     })
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove('hide')
@@ -226,24 +232,26 @@ function selectAnswer(e) {
 }
 
 
-
+let score = 0;
 function setStatus(element, correct) {
+    console.log("Called setStatus" + "\n");
     clearStatus(element)
-    if (correct) {
-        element.classList.add('correct')
-    } else {
-        // setInterval(function () { 
-        //     quizTimer.textContent = timer--; }, 5000)
+    console.log("setStaus>score = " + score + "\n");
+    console.log("correct = " + correct + "\n");
 
+
+    if (correct) {
+        score += 20;
+        element.classList.add('correct')
+    }
+    else {
+        timer--;
         element.classList.add('wrong')
     }
 }
 
-function scoreCalculation() {
-    myScore += 20
-}
 
-console.log(myScore)
+
 
 function clearStatus(element) {
     element.classList.remove('correct')
@@ -260,7 +268,7 @@ nextButton.addEventListener("click", () => {
 function endofQuestion() {
     questionContainerEl.classList.add('hide')
     seeScore.classList.remove('hide')
-
+    clearInterval(gameTimer)
 }
 
 seeScore.addEventListener("click", () => {
@@ -279,9 +287,20 @@ function finalScore(e) {
     let myName = localStorage.getItem("ID");
     console.log(submittedInital);
     showInitial.innerHTML = myName;
-    showScore.textContent = myScore;
+    showScore.textContent = score * 20;
     seeScoreboard.classList.remove('hide')
+    myForm.classList.add('hide')
 }
+
+// viewScore.addEventListener('click', seeScores)
+
+// function seeScore() {
+//     let see = document.querySelector('.hide')
+//     let highScore = localStorage.getItem("ID")
+//     see.classList.remove("hide")
+//     see.innerText = highScore;
+
+// }
 
 
 
