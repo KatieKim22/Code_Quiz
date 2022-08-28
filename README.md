@@ -16,19 +16,19 @@ HTML, CSS, and JavaScript
 ## How it works
 
 - Click "Start!"
-- Click an answer 
+- Click answers within 50 seconds 
 - If you get correct answer, background color will change to green and you get 20 points
-- if you get wrong answer, background color will turn to red and you will lose 10sec
-- 5 questions should be answered within 50 seconds
+- if you get wrong answer, background color will turn to red and you will lose 5 sec
+- 5 questions total, within 50 seconds
 - when time is up, game is over
-- click the button to add your initial and record
+- click the button to add your initial and see your record
+- click "Restart" in the bottom to restart
+- click "view Highscores" to see score.
 
-add first page and a link!!!!!!!!
 
-
-## Screenshots
-
-![the picture](images/Code_Quiz-firstpage.png)
+## Link to the "Code Quiz"
+[
+https://katiekim22.github.io/Code_Quiz/
 
 
 ## Authors
