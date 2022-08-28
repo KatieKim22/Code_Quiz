@@ -26,6 +26,9 @@ HTML, CSS, and JavaScript
 add first page and a link!!!!!!!!
 
 
+## Screenshots
+
+![the picture](images/Code_Quiz-firstpage.png)
 
 
 ## Authors
