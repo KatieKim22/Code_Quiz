@@ -14,7 +14,11 @@ const submitbtn = document.querySelector('.submit')
 const myForm = document.getElementById('myForm')
 const seeScoreboard = document.querySelector('.scoreboard')
 let showInitial = document.querySelector('.yourInitial')
-let showScore = document.querySelector('.yourScore')
+let showScore = document.querySelector('.highScores')
+let myScore = document.querySelector('.yourScore')
+const reset_btn = document.querySelector('.reset')
+const seeHighScore = document.querySelector('#highScoreboard')
+let getId = document.querySelector('.myScore1')
 
 let shuffledQuestions, currentQuestionIndex
 // function to start timer and and question, when click the start button 
@@ -30,11 +34,13 @@ function gameTimer() {
 
     let startTimer = setInterval(function () {
         quizTimer.textContent = timer--;
-        if (timer === 0) {
+        if (timer < 0) {
             // stop timer
             clearInterval(startTimer)
+            quizTimer.textContent = "0"
             // notify function to alert"Game Over"
             endofQuestion()
+
         }
     }, 1000)
 }
@@ -46,10 +52,13 @@ function gameTimer() {
 startButton.addEventListener("click", startQuiz)
 
 function startQuiz() {
+
     startButton.classList.add('hide')
     quizcontainerEl.classList.remove('hide')
     seeScore.classList.add('hide')
     initialsInputEl.classList.add('hide')
+    showScore.classList.add('hide')
+
     // sort questions by random order
 
     shuffledQuestions = qandas.sort(() => Math.random() - 0.5)
@@ -67,40 +76,24 @@ function startQuiz() {
 const qandas = [
     {
         question: "which one will console log 5?",
-        answers:
-            [{
-                text: `"One + Four";`,
-                correct: false
-            }, {
-                text: "1 + 4;",
-                correct: true
-            }, {
-                text: `"1" + \"4\";`,
-                correct: false
-            }, {
-                text: `"Five";`,
-                correct: false
-            },
-
+        answer: "1 + 4;",
+        options:
+            [
+                `"One + Four";`,
+                "1 + 4;",
+                `"1" + \"4\";`,
+                `"Five";`,
             ]
     }, {
         question: `What is name[2] in name array?
             var name = [Jane, Bob, John, Yuna]`,
-        answers:
-            [{
-                text: "Jane",
-                correct: false
-            }, {
-                text: "Bob",
-                correct: false
-            }, {
-                text: "John",
-                correct: true
-            }, {
-                text: "Yuna",
-                correct: false
-            },
-
+        answer: "John",
+        options:
+            [
+                "Jane",
+                "Bob",
+                "John",
+                "Yuna",
             ]
     }, {
         question: `Which one will delete name property in the object below?
@@ -111,57 +104,33 @@ const qandas = [
                 friends: ["everything!"],
                 bark: "bow-wow"
                     };`,
-        answers:
-            [{
-                text: "delete name;",
-                correct: false
-            }, {
-                text: "delete myDog.name",
-                correct: true
-            }, {
-                text: "delete \"Camper\"",
-                correct: false
-            }, {
-                text: "delete \"name\":\"Camper\"",
-                correct: false
-            },
-
+        answer: "delete myDog.name",
+        options:
+            [
+                "delete name;",
+                "delete myDog.name",
+                "delete \"Camper\"",
+                "delete \"name\":\"Camper\"",
             ]
     }, {
         question: "Which one is true?",
-        answers:
-            [{
-                text: "1 !=  2",
-                correct: true
-            }, {
-                text: "1 != \"1\"",
-                correct: false
-            }, {
-                text: "1 != \'1\'",
-                correct: false
-            }, {
-                text: "1 != true ",
-                correct: false
-            },
-
+        answer: "1 !=  2",
+        options:
+            [
+                "1 !=  2",
+                "1 != \"1\"",
+                "1 != \'1\'",
+                "1 != true ",
             ]
     }, {
         question: "Which one will remove the first element of an array?",
-        answers:
-            [{
-                text: ".shift()",
-                correct: true
-            }, {
-                text: ".pop()",
-                correct: false
-            }, {
-                text: ".push()",
-                correct: false
-            }, {
-                text: ".unshift()",
-                correct: false
-            },
-
+        answer: ".shift()",
+        options:
+            [
+                ".shift()",
+                ".pop()",
+                ".push()",
+                ".unshift()",
             ]
     }
 
@@ -176,24 +145,23 @@ function setNextQuestion() {
 }
 
 
-
+// show new question
 function showQuestion() {
 
-    questionText.innerText = shuffledQuestions[currentQuestionIndex].question;
+    let questionTag = shuffledQuestions[currentQuestionIndex].question;
+    let answerTag =
+        '<button class="answer">' + shuffledQuestions[currentQuestionIndex].options[0] + '<span></span></div>'
+        + '<button class="answer">' + shuffledQuestions[currentQuestionIndex].options[1] + '<span></span></div>'
+        + '<button class="answer">' + shuffledQuestions[currentQuestionIndex].options[2] + '<span></span></div>'
+        + '<button class="answer">' + shuffledQuestions[currentQuestionIndex].options[3] + '<span></span></div>'
 
-    shuffledQuestions[currentQuestionIndex].answers.forEach(answer => {
-        let button = document.createElement('button')
-        button.innerText = answer.text
-        button.classList.add('answer')
+    questionText.innerHTML = questionTag;
+    answerEl.innerHTML = answerTag
 
-        if (answer.correct) {
-            button.dataset.correct = answer.correct;
-        }
-        button.addEventListener('click', selectAnswer)
-        answerEl.appendChild(button)
-    })
+    answerEl.addEventListener('click', selectAnswer)
 
 }
+
 // delete and reset previous questions
 function resetQuestion() {
     clearStatus(document.body)
@@ -203,27 +171,34 @@ function resetQuestion() {
     }
 }
 
+let __score = 0;
+
 //check the answers and calculate scores
 answerEl.addEventListener("click", selectAnswer)
 
 function selectAnswer(e) {
 
-    var cnt;
-    let selectedAnswer = e.target;
-    let correct = selectedAnswer.dataset.correct;
-    console.log("selectedAnswer = " + selectedAnswer + "\n");
-    console.log("correct = " + correct + "\n");
+    let selectedAnswer = e.target.textContent;
 
+    console.log(selectedAnswer)
 
+    let correct = qandas[currentQuestionIndex].answer;
 
-    setStatus(document.body, correct)
-    cnt = 0;
-    Array.from(answerEl.children).forEach(button => {
-        setStatus(button, button.dataset.correct)
-        console.log("foreach cnt = "+cnt+"\n")
-        cnt++;
+    if (selectedAnswer == correct) {
+        __score += 20;
+        document.body.style.backgroundColor = "green"
+        console.log("correct!")
+    } else {
+        __score += 0;
+        timer -= 5;
+        document.body.style.backgroundColor = "red"
+        console.log("wrong")
+    }
 
-    })
+    console.log(__score)
+
+    // setStatus(document.body, correct)
+
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove('hide')
     } else {
@@ -232,45 +207,27 @@ function selectAnswer(e) {
 }
 
 
-let score = 0;
-function setStatus(element, correct) {
-    console.log("Called setStatus" + "\n");
-    clearStatus(element)
-    console.log("setStaus>score = " + score + "\n");
-    console.log("correct = " + correct + "\n");
-
-
-    if (correct) {
-        score += 20;
-        element.classList.add('correct')
-    }
-    else {
-        timer--;
-        element.classList.add('wrong')
-    }
-}
-
-
-
-
+// clear previous status 
 function clearStatus(element) {
-    element.classList.remove('correct')
-    element.classList.remove('wrong')
+    element.style.backgroundColor = 'white';
 }
 
+// to show next button
 nextButton.addEventListener("click", () => {
     currentQuestionIndex++
     setNextQuestion()
 }
 )
 
-
+// when all 5 questions answered
 function endofQuestion() {
+    clearStatus(document.body)
     questionContainerEl.classList.add('hide')
     seeScore.classList.remove('hide')
-    clearInterval(gameTimer)
+    // clearInterval(startTimer)
 }
 
+//To see score 
 seeScore.addEventListener("click", () => {
     seeScore.classList.add('hide')
     initialsInputEl.classList.remove('hide')
@@ -278,41 +235,44 @@ seeScore.addEventListener("click", () => {
 
 })
 
+// submit initial to see score
 myForm.addEventListener("submit", finalScore)
 
 function finalScore(e) {
     e.preventDefault();
     submittedInital = document.getElementById('initial').value;
-    localStorage.setItem("ID", submittedInital)
-    let myName = localStorage.getItem("ID");
+    localStorage.setItem("score", __score)
+    localStorage.setItem("ID", JSON.stringify(submittedInital))
+    let myName = localStorage.getItem('ID')
     console.log(submittedInital);
     showInitial.innerHTML = myName;
-    showScore.textContent = score * 20;
+    myScore.textContent = __score;
     seeScoreboard.classList.remove('hide')
     myForm.classList.add('hide')
+    reset_btn.classList.remove('hide')
 }
 
-// viewScore.addEventListener('click', seeScores)
+// resetting the quiz
+reset_btn.addEventListener("click", resettingQuiz)
 
-// function seeScore() {
-//     let see = document.querySelector('.hide')
-//     let highScore = localStorage.getItem("ID")
-//     see.classList.remove("hide")
-//     see.innerText = highScore;
+function resettingQuiz() {
+    window.location.reload()
 
-// }
+}
 
+// view score
+seeHighScore.addEventListener("click", showboard)
 
+function showboard() {
+    showScore.classList.remove('hide')
+    quizcontainerEl.classList.add('hide')
 
+    let myId = JSON.parse(localStorage.getItem("ID"));
+    let recordedScore = JSON.parse(localStorage.getItem("score"));
 
+    getId.textContent = myId + " " + recordedScore
 
-// GIVEN I am taking a code quiz
+    console.log(getId)
 
-// WHEN I answer a question
-// THEN I am presented with another question
-// WHEN I answer a question incorrectly
-// THEN time is subtracted from the clock
-// WHEN all questions are answered or the timer reaches 0
-// THEN the game is over
-// WHEN the game is over
-// THEN I can save my initials and my score
+}
+

@@ -9,42 +9,52 @@
     <script src="./script.js" defer></script>
     <title>Code Quiz</title>
 </head>
-<button id="scoreboard">View Highscores</button>
-<p id="seeHigh" class="hide">score</p>
-<div id="timer">50</div>
-
-<div><button id="start">Start!</button></div>
-
-<div class="quizcontainer hide">
-    <div class="questionContainer">
-        <div class="Question">Q. test</div>
-        <div class="answers">
-            <button class="answer">A1</button>
-            <button class="answer">A2</button>
-            <button class="answer">A3</button>
-            <button class="answer">A4</button>
-        </div>
-    </div>
-    <div class="okayNext">
-        <button class="next">Next</button>
-        <button class="finish">Game over! <br> Click and See your Score</button>
-    </div>
-    <div class="initialsInput">
-        <form id="myForm" class="form">
-            <label for="Initials">Your Initials: </label>
-            <input type="text" placeholder="OO" maxlength="3" id="initial">
-            <!-- <input type="submit" id="submit"> -->
-            <button type="submit" class="submit">Submit</button>
-        </form>
-        <div class="scoreboard">
-            Your score
-            <p class="yourInitial">QQ</p>
-            <p class="yourScore">100</p>
-        </div>
-    </div>
-</div>
 
 <body>
+    <button id="highScoreboard">View Highscores</button>
+    <div class="highScores hide">
+        <ol class="myScores">
+            <li class="myScore1">1.</li>
+        </ol>
+    </div>
+
+    <div id="timer"><span>You have_ </span> 50 <span>_seconds to finish</span></div>
+
+    <div><button id="start">Start!</button></div>
+    <div class="quizcontainer hide">
+        <div class="questionContainer">
+            <div class="Question">Q. test</div>
+            <div class="answers">
+                <button class="answer">A1</button>
+                <button class="answer">A2</button>
+                <button class="answer">A3</button>
+                <button class="answer">A4</button>
+            </div>
+        </div>
+        <div class="okayNext">
+            <button class="next">Next</button>
+            <button class="finish">Game over! <br> Click and See your Score</button>
+        </div>
+        <div class="initialsInput">
+            <form id="myForm" class="form">
+                <label for="Initials">Your Initial? </label>
+                <input type="text" placeholder="OO" maxlength="3" id="initial">
+                <!-- <input type="submit" id="submit"> -->
+                <button type="submit" class="submit">Submit</button>
+            </form>
+            <div class="scoreboard">
+                <p>Your Initial:
+                <p class="yourInitial"></p>
+                </p>
+                <p>Your Score: <span>
+                        <p class="yourScore">0</p>
+                    </span></p>
+            </div>
+        </div>
+
+    </div>
+    <div class="reset hide"><button class="resetGame">Restart</button></div>
+
 
 </body>
 

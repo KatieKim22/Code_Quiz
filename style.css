@@ -58,27 +58,17 @@ body {
     align-items: flex-start;
 }
 
-#scoreboard {
+#highScoreboard {
     font-size: 1.5em;
-    padding:0.2em;
+    padding: 0.2em;
     margin: 0.5em;
     border-radius: 0.5em;
-    color:#4169E1
+    color: #4169E1
 }
 
 button:hover {
     border-color: aqua;
     border: 1em;
-}
-
-body.correct {
-    background-color: green;
-    
-}
-
-body.wrong {
-    background-color: red;
-    
 }
 
 .okay,
@@ -91,6 +81,7 @@ body.wrong {
 
 .answer {
     padding: 0.5em;
+    margin: 0.3em;
     font-size: 1em;
     border-radius: 0.5em;
     background-color: #87CEFA;
@@ -103,6 +94,18 @@ body.wrong {
     font-weight: bold;
     border-radius: 0.5em;
     padding: 1em;
+}
+
+.myScores {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.resetGame {
+    padding: 0.5em;
+    font-size: 3em;
+    border-radius: 0.5em;
+    background-color: #20B2AA;
 }
 
 .hide {
